@@ -14,7 +14,7 @@ const storage = multer.memoryStorage(); // Using memory storage, you can change 
 const upload = multer({ storage: storage });
 
 // Serve static files from the public directory
-// app.use(express.static(path.join(__dirname, "/src/public")));
+// app.use(express.static(path.join(__dirname   , "/src/public")));
 
 // Set view engine and template path
 app.set("view engine", "hbs");
