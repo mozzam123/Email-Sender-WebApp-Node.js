@@ -4,11 +4,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Email Sender</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input,
+        textarea,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Home Page</h1>
+
+    <form action="/send-email" method="post" enctype="multipart/form-data">
+        <label for="sender">Sender Email:</label>
+        <input type="email" id="sender" name="sender" value="{{sender}}" required>
+
+        <label for="recipient">Recipient Email:</label>
+        <input type="email" id="recipient" name="recipient" value="{{recipient}}" required>
+
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject" value="Python/Nodejs Developer" required>
+
+        <label for="body">Body:</label>
+        <textarea id="body" name="body" rows="4" required>{{body}}</textarea>
+
+        <label for="attachment">Attachment:</label>
+        <input type="file" id="attachment" name="attachment">
+
+        <button type="submit">Send Email</button>
+    </form>
+
 </body>
 
 </html>
