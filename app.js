@@ -69,10 +69,10 @@ app.post("/send-email", upload.single("attachment"), async (req, res) => {
     }
 
     // Redirect or send response as needed
-    res.send("Email sent successfully!");
+    res.render('home', { successMessage: "Email sent successfully!" })
   } catch (error) {
     console.error("Error sending email:", error);
-    res.status(500).send("Error sending email");
+    res.render('home', { errorMessage: error })
   }
 });
 
