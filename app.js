@@ -1,9 +1,11 @@
 const express = require("express");
 const app = express();
 const multer = require("multer");
+const dotenv = require("dotenv")
 const path = require("path");
 const bodyParser = require("body-parser");
 const nodemailer = require("nodemailer");
+dotenv.config()
 
 // Parse request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -37,8 +39,8 @@ app.post("/send-email", upload.single("attachment"), async (req, res) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: 'mozzam607@gmail.com', // Your Gmail email address
-      pass: 'ckcy adna arxr glbm' // Your Gmail password or app-specific password
+      user: process.env.EMAIL_USER, // Your Gmail email address
+      pass:  process.env.EMAIL_PASSWORD// Your Gmail password or app-specific password
     }
   });
 
