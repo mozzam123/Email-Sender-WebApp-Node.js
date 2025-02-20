@@ -13,8 +13,6 @@ app.use(express.json());
 const storage = multer.memoryStorage(); // Using memory storage, you can change it as needed
 const upload = multer({ storage: storage });
 
-// Serve static files from the public directory
-// app.use(express.static(path.join(__dirname   , "/src/public")));
 
 // Set view engine and template path
 app.set("view engine", "hbs");
@@ -28,7 +26,7 @@ app.get("/", (req, res) => {
 // Handling the form submission
 app.post("/send-email", upload.single("attachment"), async (req, res) => {
   const sender = req.body.sender;
-  const recipient = req.body.recipient;
+  const recipient = req.body.recipient.trim();
   const subject = req.body.subject;
   const body = req.body.body;
 
@@ -58,11 +56,11 @@ app.post("/send-email", upload.single("attachment"), async (req, res) => {
     await transporter.sendMail(mailOptions);
 
     // Log values for testing
-    console.log("Email sent successfully!");
-    console.log("Sender:", sender);
-    console.log("Recipient:", recipient);
-    console.log("Subject:", subject);
-    console.log("Body:", body);
+    // console.log("Email sent successfully!");
+    // console.log("Sender:", sender);
+    // console.log("Recipient:", recipient);
+    // console.log("Subject:", subject);
+    // console.log("Body:", body);
 
     if (attachment) {
       console.log("Attachment:", attachment.originalname);
