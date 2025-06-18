@@ -10,6 +10,9 @@ const User = require("./models/User");
 const Email = require("./models/Email");
 dotenv.config()
 
+
+console.log("Mongo uri***********: ",process.env.MONGODB_URI);
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Connected to MongoDB'))
