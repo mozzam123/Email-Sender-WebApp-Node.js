@@ -11,7 +11,10 @@ const Email = require("./models/Email");
 dotenv.config()
 
 
-console.log("Mongo uri***********: ",process.env.MONGODB_URI);
+console.log("Mongos uri***********: ",process.env.MONGODB_URI);
+console.log("********email user: ", process.env.EMAIL_USER);
+
+
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
@@ -51,19 +54,19 @@ app.post("/send-email", upload.single("attachment"), async (req, res) => {
       user = await User.create({ email: sender });
     }
 
-    // Check if email was already sent to this recipient by this user
-    const existingEmail = await Email.findOne({
-      sender,
-      recipient,
-      sentBy: user._id
-    });
+    // // Check if email was already sent to this recipient by this user
+    // const existingEmail = await Email.findOne({
+    //   sender,
+    //   recipient,
+    //   sentBy: user._id
+    // });
 
-    if (existingEmail) {
-      return res.json({ 
-        error: true, 
-        message: "You have already sent an email to this recipient"
-      });
-    }
+    // if (existingEmail) {
+    //   return res.json({ 
+    //     error: true, 
+    //     message: "You have already sent an email to this recipient"
+    //   });
+    // }
 
     // Configure nodemailer
     const transporter = nodemailer.createTransport({
