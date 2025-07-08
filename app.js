@@ -49,10 +49,10 @@ app.post("/send-email", upload.single("attachment"), async (req, res) => {
 
   try {
     // Find or create user
-    let user = await User.findOne({ email: sender });
-    if (!user) {
-      user = await User.create({ email: sender });
-    }
+    // let user = await User.findOne({ email: sender });
+    // if (!user) {
+    //   user = await User.create({ email: sender });
+    // }
 
     // // Check if email was already sent to this recipient by this user
     // const existingEmail = await Email.findOne({
