@@ -79,7 +79,7 @@ app.post("/send-email", upload.single("attachment"), async (req, res) => {
 
     // Configure email options
     const mailOptions = {
-      from: sender,
+      from: process.env.EMAIL_USER,
       to: recipient,
       subject: subject,
       text: body,
