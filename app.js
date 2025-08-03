@@ -89,19 +89,19 @@ app.post("/send-email", upload.single("attachment"), async (req, res) => {
     // Send email
     await transporter.sendMail(mailOptions);
 
-    // Save email record
-    const emailRecord = await Email.create({
-      sender,
-      recipient,
-      subject,
-      body,
-      attachmentName: attachment ? attachment.originalname : null,
-      sentBy: user._id
-    });
+    // // Save email record
+    // const emailRecord = await Email.create({
+    //   sender,
+    //   recipient,
+    //   subject,
+    //   body,
+    //   attachmentName: attachment ? attachment.originalname : null,
+    //   sentBy: user._id
+    // });
 
-    // Update user's sent emails
-    user.sentEmails.push(emailRecord._id);
-    await user.save();
+    // // Update user's sent emails
+    // user.sentEmails.push(emailRecord._id);
+    // await user.save();
 
     // Send success response
     res.json({ 
