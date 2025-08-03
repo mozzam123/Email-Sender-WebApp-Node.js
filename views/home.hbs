@@ -50,12 +50,32 @@
         button:hover {
             background-color: #45a049;
         }
+
+        .message {
+            padding: 10px;
+            margin-bottom: 16px;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
     </style>
 </head>
 
 <body>
 
-    <form action="/send-email" method="post" enctype="multipart/form-data">
+    <form id="emailForm" enctype="multipart/form-data">
         <label for="sender">Sender Email:</label>
         <input type="email" id="sender" name="sender" value="mozzam607@gmail.com" required>
 
@@ -73,9 +93,72 @@
         <input type="file" id="attachment" name="attachment">
 
         <button type="submit">Send Email</button>
-        <h3>{{successMessage}}</h3>
-        <h3>{{errorMessage}}</h3>
+        
+        <div id="successMessage" class="message success-message"></div>
+        <div id="errorMessage" class="message error-message"></div>
     </form>
+
+    <script>
+        document.getElementById('emailForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Hide any existing messages
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+            
+            const formData = new FormData(this);
+            const submitButton = this.querySelector('button[type="submit"]');
+            
+            // Disable submit button and change text
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+            
+            try {
+                const response = await fetch('/send-email', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Show success message
+                    const successDiv = document.getElementById('successMessage');
+                    successDiv.textContent = 'Sent successfully!';
+                    successDiv.style.display = 'block';
+                    
+                    // Hide success message after 3 seconds
+                    setTimeout(() => {
+                        successDiv.style.display = 'none';
+                    }, 3000);
+                    
+                    // Reset form
+                    this.reset();
+                    
+                    // Restore original values
+                    document.getElementById('sender').value = 'mozzam607@gmail.com';
+                    document.getElementById('subject').value = 'Python/Nodejs Developer';
+                    document.getElementById('body').value = 'I am a software developer with experience in building scalable web applications using Django, Python, Node.js, and GraphQL, coupled with a strong foundation in microservices architecture, machine learning, and cloud technologies. I have previously worked on developing trading platforms, optimizing real-time data distribution, and enhancing system performance. Currently, I focus on AI-driven solutions for a CPaaS platform, where I leverage advanced analytics and machine learning models to improve communication systems. My certifications include AWS, Azure, and Google Data Analytics.';
+                    
+                } else {
+                    // Show error message
+                    const errorDiv = document.getElementById('errorMessage');
+                    errorDiv.textContent = result.message || 'Failed to send email';
+                    errorDiv.style.display = 'block';
+                }
+                
+            } catch (error) {
+                // Show error message
+                const errorDiv = document.getElementById('errorMessage');
+                errorDiv.textContent = 'An error occurred while sending the email';
+                errorDiv.style.display = 'block';
+            } finally {
+                // Re-enable submit button and restore text
+                submitButton.disabled = false;
+                submitButton.textContent = 'Send Email';
+            }
+        });
+    </script>
 
 </body>
 
